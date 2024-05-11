@@ -2,7 +2,8 @@ name: Daily Content Download
 
 on:
   schedule:
-    - cron: "0 0 * * *"  # Runs at 00:00 UTC every day
+      - cron: "* * * * *"  # Runs every minute for testing purposes
+    # - cron: "0 0 * * *"  # Runs at 00:00 UTC every day
 
 jobs:
   download_content:
