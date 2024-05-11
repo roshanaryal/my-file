@@ -1,0 +1,29 @@
+name: Daily Content Download
+
+on:
+  schedule:
+    - cron: "0 0 * * *"  # Runs at 00:00 UTC every day
+
+jobs:
+  download_content:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Download content
+        run: |
+          curl -o textfile.txt https://www.vpngate.net/api/iphone/
+          
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add textfile.txt
+          git commit -m "Content updated at - $(date +"%Y-%m-%d")"
+      
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.TOKEN }}
